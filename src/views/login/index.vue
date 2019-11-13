@@ -1,15 +1,15 @@
 <template>
-  <div >
-    你是个猪吗
+  <div>
+      我是登录页
   </div>
 </template>
 
 <script>
-
 export default {
 
-  components: {
-
-  }
 }
 </script>
+
+<style>
+
+</style>
