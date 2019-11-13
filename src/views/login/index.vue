@@ -71,9 +71,16 @@ export default {
   },
   methods: {
     login () {
-      this.$refs.formObj.validate(function (isOk) {
+      this.$refs.formObj.validate(isOk => {
         if (isOk) {
           // 成功调用接口
+          this.$axios({
+            method: 'post',
+            url: '/authorizations',
+            data: this.formData
+          }).then(res => {
+            window.localStorage.setItem('token', res.data.data.token)
+          })
         }
       })
     }
