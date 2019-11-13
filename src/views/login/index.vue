@@ -80,6 +80,13 @@ export default {
             data: this.formData
           }).then(res => {
             window.localStorage.setItem('token', res.data.data.token)
+            // 编程式导航
+            this.$router.push('/')
+          }).catch(() => {
+            this.$message({
+              message: '手机号或验证码错误',
+              type: 'warning'
+            })
           })
         }
       })
