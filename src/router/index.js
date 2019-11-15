@@ -17,7 +17,7 @@ import Account from '@/views/account'
 // 素材管理组件
 import Image from '@/views/images'
 // @  是  vuecli 中提供的一种特殊路径规则  他直接指向  src 目录
-
+import Nprogress from 'nprogress'
 Vue.use(VueRouter)
 const routes = [
   {
@@ -73,6 +73,8 @@ const router = new VueRouter({
 // next  他是一个方法  用于路由放行
 // 判断用户的登录状态  有就通过  没有就不通过
 router.beforeEach((to, from, next) => {
+  // 开启进度条
+  Nprogress.start()
   // 登录页面 直接放行
   console.log(to)
   if (to.path === '/login') {
@@ -85,7 +87,11 @@ router.beforeEach((to, from, next) => {
     next()
   } else {
     next('/login')
+    Nprogress.done()
   }
+})
+router.afterEach((to, from) => {
+  Nprogress.done()
 })
 
 export default router
