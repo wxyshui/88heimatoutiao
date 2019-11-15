@@ -9,6 +9,7 @@ axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0'
 Vue.prototype.$axios = axios
 
 Vue.use(ElementUI)
+// 是否为生产环境
 Vue.config.productionTip = false
 new Vue({
   router,
