@@ -67,4 +67,25 @@ const router = new VueRouter({
   routes
 })
 
+// 路由拦截器    让我们没登录就不可以访问 别的页面
+// to  表示去哪里的路由信息
+// from 表示来自哪里的路由信息
+// next  他是一个方法  用于路由放行
+// 判断用户的登录状态  有就通过  没有就不通过
+router.beforeEach((to, from, next) => {
+  // 登录页面 直接放行
+  console.log(to)
+  if (to.path === '/login') {
+    next()
+    return
+  }
+  // 非登录页面  判断token
+  const token = window.localStorage.getItem('token')
+  if (token) {
+    next()
+  } else {
+    next('/login')
+  }
+})
+
 export default router

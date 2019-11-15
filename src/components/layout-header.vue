@@ -4,7 +4,7 @@
       <i class="el-icon-s-unfold"></i>
       <span>江苏传智播客教育科技股份有限公司</span>
     </el-col>
-    <el-col :span="2" class='right'>
+    <el-col :span="3" class='right'>
       <img src="../assets/img/avatar.jpg" alt />
       <el-dropdown trigger="click" style="cursor:pointer">
         <span class="el-dropdown-link">
@@ -41,7 +41,7 @@ export default {}
   img {
     width: 35px;
     vertical-align: middle;
-     margin-right: 5px;
+     margin-right: 10px;
      border-radius: 50%
   }
 }
