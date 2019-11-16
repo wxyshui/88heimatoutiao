@@ -1,5 +1,11 @@
 <template>
-  <el-menu background-color="#353b4e" text-color="#adafb5" active-text-color="#ffd04b" style="width:216px" router>
+  <el-menu
+    background-color="#353b4e"
+    text-color="#adafb5"
+    active-text-color="#ffd04b"
+    style="width:216px"
+    router
+     >
       <div class='menu-title'>
           <img src="../assets/img/logo_admin.png" alt="" >
       </div>
@@ -31,6 +37,7 @@ export default {}
     background-color: #2e2f32;
     padding: 15px 0;
     text-align: center;
+
     img {
         height: 25px;
     }

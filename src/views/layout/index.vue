@@ -2,9 +2,11 @@
   <!-- 先定义一个大容器 -->
   <el-container>
     <!-- 先放置一个左侧 -->
-    <el-aside class="left" style="width:200px">
+   <div style="width:200px">
+      <el-aside class="left" style="width:200px">
       <layout-left></layout-left>
     </el-aside>
+   </div>
     <!-- 右侧大容器 -->
     <el-container>
       <!-- 头部 -->
@@ -39,5 +41,6 @@ export default {
   height: 100vh;
   background-color: #323745;
   overflow: hidden;
+  position: fixed;
 }
 </style>

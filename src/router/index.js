@@ -76,7 +76,6 @@ router.beforeEach((to, from, next) => {
   // 开启进度条
   Nprogress.start()
   // 登录页面 直接放行
-  console.log(to)
   if (to.path === '/login') {
     next()
     return
