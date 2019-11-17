@@ -136,13 +136,13 @@ export default {
     // 页面加载
     loadArticles (page) {
       this.loading = true
-      const token = window.localStorage.getItem('token')
+      // const token = window.localStorage.getItem('token')
       this.$axios({
         method: 'GET',
         url: '/articles',
-        headers: {
-          Authorization: `Bearer ${token}`
-        },
+        // headers: {
+        //   Authorization: `Bearer ${token}`
+        // },
         // Qurey 参数用params 传递
         params: {
           page, // 页数
@@ -180,13 +180,13 @@ export default {
     },
     // 文章的删除
     onDelete (targrt) {
-      const token = window.localStorage.getItem('token')
+      // const token = window.localStorage.getItem('token')
       this.$axios({
         method: 'DELETE',
-        url: `/articles/${targrt}`,
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
+        url: `/articles/${targrt}`
+        // headers: {
+        //   Authorization: `Bearer ${token}`
+        // }
       }).then(res => {
         // console.log(res)
         this.loadArticles(this.page)

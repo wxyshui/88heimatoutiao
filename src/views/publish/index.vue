@@ -77,13 +77,13 @@ export default {
       })
     },
     onSubmit (draft) {
-      const token = window.localStorage.getItem('token')
+      // const token = window.localStorage.getItem('token')
       this.$axios({
         method: 'POST',
         url: '/articles',
-        headers: {
-          Authorization: `Bearer ${token}`
-        },
+        // headers: {
+        //   Authorization: `Bearer ${token}`
+        // },
         params: {
           draft
         },
