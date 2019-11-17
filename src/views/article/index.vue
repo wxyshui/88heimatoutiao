@@ -17,9 +17,15 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="活动区域">
-          <el-select v-model="formData.region" placeholder="请选择活动区域">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
+          <el-select v-model="formData.channel_id" placeholder="请选择活动区域">
+            <el-option
+            :label=item.name
+            :value=item.id
+            v-for= 'item in articleChannels'
+            :key = item.id
+            >
+            </el-option>
+
           </el-select>
         </el-form-item>
         <el-form-item label="时间选择:">
@@ -30,20 +36,20 @@
             unlink-panels
             start-placeholder="开始日期"
             end-placeholder="结束日期"
-            value-format="yyyy--MM--dd"
+            value-format="yyyy-MM-dd"
           ></el-date-picker>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" plain>查询</el-button>
+          <el-button type="primary" @click='loadArticles()'>查询</el-button>
         </el-form-item>
       </el-form>
     </el-card>
     <!-- 文章列表 -->
     <el-card style="margin-top:20px">
       <div slot="header" class="clearfix">
-        <span style="margin-right:20px">共找到60077条符合条件的内容</span>
+        <span style="margin-right:20px">共找到{{totalCount}}条符合条件的内容</span>
       </div>
-      <el-table :data="tableData" style="width: 100%" class="table">
+      <el-table :data="tableData" style="width: 100%" class="table"  v-loading="loading">
         <el-table-column prop="date" label="封面" width="180">
           <!-- 自定义组件 -->
           <template slot-scope="scope">
@@ -60,9 +66,9 @@
         </el-table-column>
         <el-table-column prop="pubdate" label="发布日期"></el-table-column>
         <el-table-column prop="address" label="操作">
-          <template>
+          <template slot-scope="scope">
             <el-button type="primary" icon="el-icon-edit" circle size="mini"></el-button>
-            <el-button type="danger" icon="el-icon-delete" circle size="mini"></el-button>
+            <el-button type="danger" icon="el-icon-delete" circle size="mini" @click='onDelete(scope.row.id)'></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -71,6 +77,8 @@
           style="margin-top20px"
           :total=totalCount
           @current-change='onPageChange'
+          :disabled = loading
+          :current-page=page
        ></el-pagination>
       </div>
     </el-card>
@@ -82,11 +90,12 @@ export default {
   name: 'abc',
   data () {
     return {
+      loading: false,
       formData: {
-        region: '',
-        status: '' // 查询状态
+        channel_id: null, // 频道id
+        status: null // 查询状态
       },
-      rangeDate: '', // 时间参数
+      rangeDate: [], // 时间参数
       tableData: [], // 文章列表
       articlestatus: [
         // 状态数组
@@ -112,14 +121,21 @@ export default {
         }
       ],
       // 文章的数据个数
-      totalCount: 0
+      totalCount: 0,
+      // 频道数据
+      articleChannels: null,
+      // 当前页
+      page: null
     }
   },
   created () {
     this.loadArticles()
+    this.loadChannels()
   },
   methods: {
+    // 页面加载
     loadArticles (page) {
+      this.loading = true
       const token = window.localStorage.getItem('token')
       this.$axios({
         method: 'GET',
@@ -130,18 +146,53 @@ export default {
         // Qurey 参数用params 传递
         params: {
           page, // 页数
-          per_page: 10// 每页数量
+          per_page: 10, // 每页数量
+          status: this.formData.status, // 状态
+          channel_id: this.formData.channel_id, // 频道id
+          begin_pubdate: this.rangeDate ? this.rangeDate[0] : null, // 开始时间
+          end_pubdate: this.rangeDate ? this.rangeDate[1] : null// 结束时间
         }
       })
         .then(res => {
           // console.log(res)
           this.tableData = res.data.data.results
           this.totalCount = res.data.data.total_count
+          this.page = res.data.data.page
         })
         .catch(err => console.log(err, '获取失败'))
+        .finally(() => {
+          this.loading = false
+        })
     },
+    // 点击分页 页面跳转
     onPageChange (page) {
       this.loadArticles(page)
+    },
+    // 文章频道的加载
+    loadChannels () {
+      this.$axios({
+        method: 'GET',
+        url: '/channels'
+      }).then(res => {
+        // console.log(res)
+        this.articleChannels = res.data.data.channels
+      })
+    },
+    // 文章的删除
+    onDelete (targrt) {
+      const token = window.localStorage.getItem('token')
+      this.$axios({
+        method: 'DELETE',
+        url: `/articles/${targrt}`,
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }).then(res => {
+        // console.log(res)
+        this.loadArticles()
+      }).catch(err => {
+        console.log(err, '删除失败')
+      })
     }
   }
 }
