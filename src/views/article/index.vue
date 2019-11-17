@@ -95,7 +95,7 @@ export default {
         channel_id: null, // 频道id
         status: null // 查询状态
       },
-      rangeDate: [], // 时间参数
+      rangeDate: null, // 时间参数
       tableData: [], // 文章列表
       articlestatus: [
         // 状态数组
@@ -189,7 +189,7 @@ export default {
         }
       }).then(res => {
         // console.log(res)
-        this.loadArticles()
+        this.loadArticles(this.page)
       }).catch(err => {
         console.log(err, '删除失败')
       })
