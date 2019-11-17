@@ -16,8 +16,8 @@
             <el-radio label="4">已删除</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="活动区域">
-          <el-select v-model="formData.channel_id" placeholder="请选择活动区域">
+        <el-form-item label="频道列表:">
+          <el-select v-model="formData.channel_id" placeholder="请选择">
             <el-option
             :label=item.name
             :value=item.id
