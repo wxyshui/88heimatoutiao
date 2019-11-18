@@ -14,17 +14,9 @@
                 >
                 </quill-editor>
         </el-form-item>
-        <el-form-item label="频道列表">
-          <el-select v-model="publishForm.channel_id" placeholder="请选择">
-            <el-option
-            :label=item.name
-            :value=item.id
-            v-for= 'item in publishChannels'
-            :key = item.id
-            >
-            </el-option>
-
-          </el-select>
+        <el-form-item label="频道列表:">
+          <!-- 频道列表组件 -->
+            <article-channels  v-model="publishForm.channel_id"></article-channels>
         </el-form-item>
         <!-- <el-form-item label="封面">
           <el-radio-group v-model="publishForm.cover">
@@ -43,14 +35,18 @@
 
 <script>
 // require styles
+// 富文本编辑器
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 
 import { quillEditor } from 'vue-quill-editor'
+// 频道列表插件
+import ArticleChannels from '../../components/articlechannels'
 export default {
   components: {
-    quillEditor
+    quillEditor,
+    ArticleChannels
   },
   name: 'abd',
   data () {
@@ -63,21 +59,10 @@ export default {
           type: 0,
           images: []
         }
-      },
-      publishChannels: null
+      }
     }
   },
   methods: {
-    // 加载文章频道
-    loadChannels () {
-      this.$axios({
-        method: 'GET',
-        url: '/channels'
-      }).then(res => {
-        // console.log(res)
-        this.publishChannels = res.data.data.channels
-      })
-    },
     // 发布功能
     onSubmit (draft) {
       if (this.$route.params.articleId) {
@@ -136,7 +121,6 @@ export default {
     }
   },
   created () {
-    this.loadChannels()
     if (this.$route.params.articleId) {
       this.loadArticle()
     }
@@ -144,5 +128,8 @@ export default {
 }
 </script>
 
-<style>
+<style lang='less' scope>
+.ql-editor{
+  min-height: 300px
+}
 </style>

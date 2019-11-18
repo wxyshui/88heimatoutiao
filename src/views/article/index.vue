@@ -17,16 +17,8 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="频道列表:">
-          <el-select v-model="formData.channel_id" placeholder="请选择">
-            <el-option
-            :label=item.name
-            :value=item.id
-            v-for= 'item in articleChannels'
-            :key = item.id
-            >
-            </el-option>
-
-          </el-select>
+          <!-- 频道列表组件 -->
+          <article-channels  v-model="formData.channel_id"></article-channels>
         </el-form-item>
         <el-form-item label="时间选择:">
           <el-date-picker
@@ -78,7 +70,7 @@
           :total=totalCount
           @current-change='onPageChange'
           :disabled = loading
-          :current-page=page
+          :current-page= page
        ></el-pagination>
       </div>
     </el-card>
@@ -86,8 +78,12 @@
 </template>
 
 <script>
+import ArticleChannels from '../../components/articlechannels'
 export default {
   name: 'abc',
+  components: {
+    ArticleChannels
+  },
   data () {
     return {
       loading: false,
@@ -122,15 +118,12 @@ export default {
       ],
       // 文章的数据个数
       totalCount: 0,
-      // 频道数据
-      articleChannels: null,
       // 当前页
       page: null
     }
   },
   created () {
     this.loadArticles()
-    this.loadChannels()
   },
   methods: {
     // 页面加载
@@ -168,16 +161,7 @@ export default {
     onPageChange (page) {
       this.loadArticles(page)
     },
-    // 文章频道的加载
-    loadChannels () {
-      this.$axios({
-        method: 'GET',
-        url: '/channels'
-      }).then(res => {
-        // console.log(res)
-        this.articleChannels = res.data.data.channels
-      })
-    },
+
     // 文章的删除
     onDelete (targrt) {
       // const token = window.localStorage.getItem('token')

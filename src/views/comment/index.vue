@@ -40,7 +40,7 @@
         label="操作"
          align='center'>
         <template slot-scope="scope">
-          <el-button type="primary" size='mini' @click='$router.push(`/publish/${scope.row.id}`)'>编辑</el-button>
+          <el-button type="primary" size='mini' @click='$router.push(`/comment/${scope.row.id}`)'>编辑</el-button>
         </template>
       </el-table-column>
     </el-table>

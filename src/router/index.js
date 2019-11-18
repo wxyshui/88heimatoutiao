@@ -36,7 +36,7 @@ const routes = [
       },
       {
         path: '/publish/:articleId',
-        component: CommentEdit
+        component: Publish
       },
       {
         path: '/article',
@@ -48,7 +48,7 @@ const routes = [
       },
       {
         path: '/comment/:commentId',
-        component: Comment
+        component: CommentEdit
       },
       {
         path: '/account',
