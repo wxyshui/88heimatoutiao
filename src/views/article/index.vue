@@ -50,22 +50,22 @@
         <span style="margin-right:20px">共找到{{totalCount}}条符合条件的内容</span>
       </div>
       <el-table :data="tableData" style="width: 100%" class="table"  v-loading="loading">
-        <el-table-column prop="date" label="封面" width="180">
+        <el-table-column prop="date" label="封面" width="180" align='center'>
           <!-- 自定义组件 -->
           <template slot-scope="scope">
             <img :src="scope.row.cover.images[0]" alt width="50" />
           </template>
         </el-table-column>
-        <el-table-column prop="title" label="标题" width="180"></el-table-column>
-        <el-table-column prop="status" label="发布状态">
+        <el-table-column prop="title" label="标题" width="180" align='center'></el-table-column>
+        <el-table-column prop="status" label="发布状态" align='center'>
           <template slot-scope="scope">
             <el-tag
               :type="articlestatus[scope.row.status].type"
             >{{ articlestatus[scope.row.status].label}}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="pubdate" label="发布日期"></el-table-column>
-        <el-table-column prop="address" label="操作">
+        <el-table-column prop="pubdate" label="发布日期" align='center'></el-table-column>
+        <el-table-column prop="address" label="操作" align='center'>
           <template slot-scope="scope">
             <el-button type="primary" icon="el-icon-edit" circle size="mini" @click='$router.push(`/publish/${scope.row.id}`)'></el-button>
             <el-button type="danger" icon="el-icon-delete" circle size="mini" @click='onDelete(scope.row.id)'></el-button>

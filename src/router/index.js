@@ -19,6 +19,7 @@ import Image from '@/views/images'
 // @  是  vuecli 中提供的一种特殊路径规则  他直接指向  src 目录
 import Nprogress from 'nprogress'
 import { Loading } from 'element-ui'
+import CommentEdit from '../views/comment-edit'
 Vue.use(VueRouter)
 const routes = [
   {
@@ -35,7 +36,7 @@ const routes = [
       },
       {
         path: '/publish/:articleId',
-        component: Publish
+        component: CommentEdit
       },
       {
         path: '/article',
@@ -43,6 +44,10 @@ const routes = [
       },
       {
         path: '/comment',
+        component: Comment
+      },
+      {
+        path: '/comment/:commentId',
         component: Comment
       },
       {
