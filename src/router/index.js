@@ -7,7 +7,7 @@ import Layout from '../views/layout'
 // 首页组件
 import Home from '@/views/home'
 // 发表文章组件
-import Pulish from '@/views/publish'
+import Publish from '@/views/publish'
 // 文章列表组件
 import Article from '@/views/article'
 // 评论列表组件
@@ -18,6 +18,7 @@ import Account from '@/views/account'
 import Image from '@/views/images'
 // @  是  vuecli 中提供的一种特殊路径规则  他直接指向  src 目录
 import Nprogress from 'nprogress'
+import { Loading } from 'element-ui'
 Vue.use(VueRouter)
 const routes = [
   {
@@ -29,8 +30,12 @@ const routes = [
         component: Home
       },
       {
-        path: '/pulish',
-        component: Pulish
+        path: '/publish',
+        component: Publish
+      },
+      {
+        path: '/publish/:articleId',
+        component: Publish
       },
       {
         path: '/article',
@@ -75,9 +80,11 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   // 开启进度条
   Nprogress.start()
-  // 登录页面 直接放行
+  let loadingInstance = Loading.service()
+  loadingInstance.close()
   if (to.path === '/login') {
     next()
+
     return
   }
   // 非登录页面  判断token

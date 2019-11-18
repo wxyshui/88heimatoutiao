@@ -2,7 +2,7 @@
   <div>
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>发表文章</span>
+        <span>{{$route.params.articleId ? '编辑文章':'发表文章'}}</span>
       </div>
       <el-form  :model="publishForm" label-width="80px">
         <el-form-item label="标题">
@@ -52,10 +52,11 @@ export default {
   components: {
     quillEditor
   },
+  name: 'abd',
   data () {
     return {
       publishForm: {
-        name: '',
+        title: '',
         content: '',
         channel_id: '',
         cover: {
@@ -67,6 +68,7 @@ export default {
     }
   },
   methods: {
+    // 加载文章频道
     loadChannels () {
       this.$axios({
         method: 'GET',
@@ -76,11 +78,48 @@ export default {
         this.publishChannels = res.data.data.channels
       })
     },
+    // 发布功能
     onSubmit (draft) {
-      // const token = window.localStorage.getItem('token')
+      if (this.$route.params.articleId) {
+        this.editArticle(draft)
+      } else {
+        this.publishArticle(draft)
+      }
+    },
+    // 获取指定文章
+    loadArticle () {
+      this.$axios({
+        method: 'GET',
+        url: `articles/${this.$route.params.articleId}`
+      }).then(res => {
+        // console.log(res)
+        this.publishForm = res.data.data
+      })
+    },
+    // 发表文章
+    publishArticle (draft) {
       this.$axios({
         method: 'POST',
         url: '/articles',
+        // headers: {
+        //   Authorization: `Bearer ${token}`
+        // },
+        params: {
+          draft
+        },
+        data: this.publishForm
+      }).then(res => {
+        // console.log(res)
+        this.$router.push('/article')
+      }).catch(err => {
+        console.log(err, '保存失败')
+      })
+    },
+    // 编辑文章
+    editArticle (draft) {
+      this.$axios({
+        method: 'PUT',
+        url: `/articles/${this.$route.params.articleId}`,
         // headers: {
         //   Authorization: `Bearer ${token}`
         // },
@@ -98,6 +137,9 @@ export default {
   },
   created () {
     this.loadChannels()
+    if (this.$route.params.articleId) {
+      this.loadArticle()
+    }
   }
 }
 </script>
