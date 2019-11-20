@@ -47,8 +47,9 @@ const routes = [
         component: Comment
       },
       {
-        path: '/comment/:commentId',
-        component: CommentEdit
+        path: '/comment/:articleId',
+        component: CommentEdit,
+        props: true
       },
       {
         path: '/account',

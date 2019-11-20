@@ -40,7 +40,11 @@
         label="操作"
          align='center'>
         <template slot-scope="scope">
-          <el-button type="primary" size='mini' @click='$router.push(`/comment/${scope.row.id}`)'>编辑</el-button>
+          <el-button
+          type="primary"
+          size='mini'
+          @click='$router.push(`/comment/${scope.row.id}`)'
+          >编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -104,7 +108,7 @@ export default {
           article_id: obj.id.toString()
         },
         data: {
-          allowComment: obj.comment_status
+          allow_comment: obj.comment_status
         }
       }).then(res => {
         this.$message({

@@ -4,7 +4,7 @@
     placeholder="请选择频道"
     :value='value'
     @input="$emit('input',$event)">
-    <el-option label='所有频道' :value=null></el-option>
+    <el-option label='所有频道' :value="null" v-if="coldeAll"></el-option>
             <el-option
             :label=item.name
             :value=item.id
@@ -28,7 +28,13 @@ export default {
   props: {
     value: {
       type: [String, Number, null]
+    },
+    coldeAll: {
+      type: Boolean,
+      default: true
+
     }
+
   },
   methods: {
     // 文章频道的加载

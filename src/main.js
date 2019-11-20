@@ -9,6 +9,8 @@ import axios from 'axios'
 import 'nprogress/nprogress.css'
 // 配置 axios 自定义后端数据转换规则
 import JSONbig from 'json-bigint'
+// 文本格式化 优化  第三方工具
+import moment from 'moment'
 // axios  会默认把后端 返回的数据使用json.parse转为对象给我们使用
 // 同时也提供了自定义转化功能供我们使用
 axios.defaults.transformResponse = [function (data, headers) {
@@ -46,6 +48,11 @@ axios.interceptors.response.use(function (response) {
   // Any status codes that falls outside the range of 2xx cause this function to trigger
   // Do something with response error
   return Promise.reject(error)
+})
+// 全局过滤器 参数一 过滤器名称   参数二 函数  参数三format  不传参 默认 为 它
+// 调用方式  在模板中  {{数据 | 过滤器名称}}
+Vue.filter('dateformat', (item, format = 'YYYY-MM-DD') => {
+  return moment(item).format(format)
 })
 axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0'
 Vue.prototype.$axios = axios

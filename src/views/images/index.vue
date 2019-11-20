@@ -1,5 +1,7 @@
 <template>
-  <div>素材管理</div>
+  <div>
+      我是素材
+  </div>
 </template>
 
 <script>

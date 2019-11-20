@@ -16,7 +16,10 @@
         </el-form-item>
         <el-form-item label="频道列表:">
           <!-- 频道列表组件 -->
-            <article-channels  v-model="publishForm.channel_id"></article-channels>
+            <article-channels
+             v-model="publishForm.channel_id"
+             :colde-all= false
+             ></article-channels>
         </el-form-item>
         <!-- <el-form-item label="封面">
           <el-radio-group v-model="publishForm.cover">
