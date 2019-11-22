@@ -75,8 +75,12 @@ export default {
         url: 'user/images',
         data: formData
       })
-        .then(res => {
+        .then(() => {
           // console.log(res)
+          this.$message({
+            message: '上传成功',
+            type: 'success'
+          })
           this.loadImage(false)
         })
         .catch(err => {
