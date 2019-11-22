@@ -48,7 +48,7 @@
               type="text"
               @click="Top(scope.row)"
               >
-              {{ scope.row.is_top === 1 ? '取消推荐' : '推荐' }}
+              {{ scope.row.is_top == 1 ? '取消推荐' : '推荐' }}
               </el-button>
 
           </template>
@@ -110,7 +110,7 @@ export default {
         }
       }).then(res => {
         console.log(res)
-        this.loadCommentEdit()
+        comment.is_top = !comment.is_top
       }).catch(err => {
         console.log(err)
         this.$message.error('获取数据失败')

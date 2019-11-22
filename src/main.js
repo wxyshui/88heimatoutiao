@@ -49,7 +49,7 @@ axios.interceptors.response.use(function (response) {
   // Do something with response error
   return Promise.reject(error)
 })
-// 全局过滤器 参数一 过滤器名称   参数二 函数  参数三format  不传参 默认 为 它
+// 全局过滤器 参数一 过滤器名称   参数二 函数（参数一  数据  参数2 format  不传参 默认 为 它）
 // 调用方式  在模板中  {{数据 | 过滤器名称}}
 Vue.filter('dateformat', (item, format = 'YYYY-MM-DD') => {
   return moment(item).format(format)

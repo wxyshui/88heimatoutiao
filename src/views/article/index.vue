@@ -66,7 +66,6 @@
       </el-table>
       <div class="sorter">
         <el-pagination background
-          style="margin-top20px"
           :total=totalCount
           @current-change='onPageChange'
           :disabled = loading
