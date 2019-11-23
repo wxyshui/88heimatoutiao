@@ -108,6 +108,7 @@
 </template>
 
 <script>
+import eventBus from '../../utils/event-bus.js'
 export default {
   data () {
     return {
@@ -166,6 +167,7 @@ export default {
           message: '修改成功',
           type: 'success'
         })
+        eventBus.$emit('update-user', this.user)
       })
     },
     // 点击取消
@@ -173,6 +175,7 @@ export default {
       this.onAmendStatus(status)
       // this.loadUser()
     },
+    // 上传头像
     onUpload (config) {
       const fd = new FormData()
 
@@ -186,6 +189,7 @@ export default {
         .then(res => {
           // 更新图片地址
           this.user.photo = res.data.data.photo
+          eventBus.$emit('update-user', this.user)
         })
         .catch(err => {
           console.log(err)

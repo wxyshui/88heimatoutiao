@@ -5,10 +5,10 @@
       <span>江苏传智播客教育科技股份有限公司</span>
     </el-col>
     <el-col :span="3" class="right">
-      <img src="../assets/img/avatar.jpg" alt />
+      <img :src="user.photo" alt />
       <el-dropdown trigger="click" style="cursor:pointer">
         <span class="el-dropdown-link">
-          昵称
+         {{user.name}}
           <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
@@ -23,8 +23,18 @@
 </template>
 
 <script>
+import eventBus from '../utils/event-bus.js'
 export default {
+  data () {
+    return {
+      user: {
+        name: '',
+        photo: ''
+      }
+    }
+  },
   methods: {
+    // 退出功能
     onlogout () {
       this.$confirm('确认退出吗', '提示', {
         confirmButtonText: '确定',
@@ -48,7 +58,29 @@ export default {
             message: '已取消退出'
           })
         })
+    },
+    // 获取和人信息
+    loadUser () {
+      this.$axios({
+        method: 'GET',
+        url: 'user/profile'
+      })
+        .then(res => {
+          console.log(res)
+          this.user = res.data.data
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
+  },
+  created () {
+    // 获取个人信息
+    this.loadUser()
+    eventBus.$on('update-user', user => {
+      this.user.name = user.name
+      this.user.photo = user.photo
+    })
   }
 }
 </script>
